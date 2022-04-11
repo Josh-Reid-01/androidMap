@@ -3,15 +3,15 @@
 <item
     android:id="@+id/item1"
     android:title="roadworks"
-    android:icon="@mipmap/ic_launcher"/>
+    />
 
     <item
         android:id="@+id/item2"
         android:title="current incidents"
-        android:icon="@mipmap/ic_launcher"/>
+        />
 
     <item
         android:id="@+id/item3"
         android:title="planned roadworks"
-        android:icon="@mipmap/ic_launcher"/>
+        />
 </menu>

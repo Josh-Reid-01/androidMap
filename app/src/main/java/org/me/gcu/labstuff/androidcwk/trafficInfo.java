@@ -10,8 +10,8 @@ public class trafficInfo {
         this.title = title;
         this.description = description;
         this.link = link;
-        this.georsslat = 36;
-        this.georsslon = 37;
+        this.georsslat = georsslat;
+        this.georsslon = georsslon;
         this.pubDate = pubDate;
     }
 

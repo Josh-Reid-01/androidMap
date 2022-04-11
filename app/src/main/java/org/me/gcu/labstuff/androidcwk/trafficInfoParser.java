@@ -102,9 +102,15 @@ public class trafficInfoParser  extends AppCompatActivity
 
         }
 
-        private void parseData(String dataToParse)
+        private ArrayList<trafficInfo> parseData(String dataToParse)
         {   ArrayList<trafficInfo> trafficInfos = new ArrayList<>();
-            trafficInfo tInfo = new trafficInfo();
+            String Title = "";
+            String Desc = "";
+            String Link ="";
+
+            float Lat = 0;
+            float Lon = 0;
+            String PubDate="";
             try
             {
 
@@ -115,7 +121,7 @@ public class trafficInfoParser  extends AppCompatActivity
                 int eventType = xpp.getEventType();
 
                 while (eventType != XmlPullParser.END_DOCUMENT)
-                {
+                { trafficInfo tinfo = new trafficInfo();
                     // Found a start tag
                     if(eventType == XmlPullParser.START_TAG)
                     {
@@ -125,7 +131,9 @@ public class trafficInfoParser  extends AppCompatActivity
                             // Now just get the associated text
                             String title = xpp.nextText();
                             // Do something with text
-                            tInfo.setTitle(title);
+                            Title = title;
+                            tinfo.setTitle(Title);
+                            Log.e("CheckingOutRSSParser", "traffic Info here: " + tinfo.toString());
                         }
                         else
                             // Check which Tag we have
@@ -134,7 +142,9 @@ public class trafficInfoParser  extends AppCompatActivity
                                 // Now just get the associated text
                                 String desc = xpp.nextText();
                                 // Do something with text
-                                tInfo.setDescription(desc);
+                                Desc=desc;
+                                tinfo.setDescription(Desc);
+                                Log.e("CheckingOutRSSParser", "traffic Info here: " + tinfo.toString());
                             }
                             else
                                 // Check which Tag we have
@@ -143,7 +153,9 @@ public class trafficInfoParser  extends AppCompatActivity
                                     // Now just get the associated text
                                     String link = xpp.nextText();
                                     // Do something with text
-                                    tInfo.setLink(link);
+                                    Link=link;
+                                    tinfo.setLink(Link);
+                                    Log.e("CheckingOutRSSParser", "traffic Info here: " + tinfo.toString());
                                 }
                                 else
                                     // Check which Tag we have
@@ -153,8 +165,11 @@ public class trafficInfoParser  extends AppCompatActivity
                                         String georsslatandlon = xpp.nextText();
                                         String [] latandlon = georsslatandlon.split(" ");
                                         // Do something with text
-                                        tInfo.setGeorsslat(Float.parseFloat(latandlon[0]));
-                                        tInfo.setGeorsslon(Float.parseFloat(latandlon[1]));
+                                        Lat=(Float.parseFloat(latandlon[0]));
+                                        Lon=(Float.parseFloat(latandlon[1]));
+                                        tinfo.setGeorsslat(Lat);
+                                        tinfo.setGeorsslon(Lon);
+                                        Log.e("CheckingOutRSSParser", "traffic Info here: " + tinfo.toString());
                                     }
                                     else
                                         // Check which Tag we have
@@ -163,9 +178,12 @@ public class trafficInfoParser  extends AppCompatActivity
                                             // Now just get the associated text
                                             String pubDate = xpp.nextText();
                                             // Do something with text
-                                            tInfo.setPubDate(pubDate);
+                                            PubDate=pubDate;
+                                            tinfo.setPubDate(PubDate);
+                                            Log.e("CheckingOutRSSParser", "traffic Info here: " + tinfo.toString());
                                         }
-                        trafficInfos.add(tInfo);
+
+                        trafficInfos.add(tinfo);
                     }
 
                     // Get the next event
@@ -185,7 +203,7 @@ public class trafficInfoParser  extends AppCompatActivity
 
             Log.e("MyTag","End document");
 
-
+          return trafficInfos;
 
         }
 

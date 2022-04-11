@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -20,7 +20,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:hint="Search Location Here" />
+            android:hint="Search Location Here"
+            android:elevation="8dp"
+            android:singleLine="true"
+            android:background="@color/white"
+            />
 
 
         <Button
@@ -29,9 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="onMapSearch"
-            android:text="Search" />
+            android:text="Search"
+            android:layout_gravity="end"/>
 
-    </LinearLayout>
+
 
     <fragment
         android:id="@+id/map"
@@ -40,17 +45,17 @@
         android:layout_height="743dp"
         tools:context=".MapsActivity" />
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/floatingActionButton"
-    android:layout_marginEnd="24dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:tint="@android:color/white"
-   android:layout_gravity="end|bottom"
-    android:layout_margin="16dp"
-    app:srcCompat="@drawable/ic_icon"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:onClick="showPopUp"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@android:color/white"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_icon"/>
 
 
 
