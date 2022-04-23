@@ -24,12 +24,16 @@ public class trafficInfoParser  extends AppCompatActivity
     {
 
         private String result = "";
+        ArrayList<trafficInfo> trafficInfos = new ArrayList<>();
         private String url1="";
         // Traffic Scotland Planned Roadworks XML link
         private String urlSource="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
         private String urlSource2 = "https://trafficscotland.org/rss/feeds/currentincidents.aspx";
         private String urlSource3 = "https://trafficscotland.org/rss/feeds/roadworks.aspx";
 
+        public ArrayList<trafficInfo> getTrafficInfos() {
+            return trafficInfos;
+        }
 
         public void startProgress()
         {
@@ -93,7 +97,7 @@ public class trafficInfoParser  extends AppCompatActivity
                 //
                 // Now that you have the xml data you can parse it
                 //
-  parseData(result);
+  trafficInfos = parseData(result);
                 // Now update the TextView to display raw XML data
                 // Probably not the best way to update TextView
                 // but we are just getting started !
@@ -103,13 +107,13 @@ public class trafficInfoParser  extends AppCompatActivity
         }
 
         private ArrayList<trafficInfo> parseData(String dataToParse)
-        {   ArrayList<trafficInfo> trafficInfos = new ArrayList<>();
+       {   ArrayList<trafficInfo> trafficInfos = null;
             String Title = "";
             String Desc = "";
             String Link ="";
-
-            float Lat = 0;
-            float Lon = 0;
+            trafficInfo tinfo = null;
+            float Lat = 0.0f;
+            float Lon = 0.0f;
             String PubDate="";
             try
             {
@@ -121,10 +125,22 @@ public class trafficInfoParser  extends AppCompatActivity
                 int eventType = xpp.getEventType();
 
                 while (eventType != XmlPullParser.END_DOCUMENT)
-                { trafficInfo tinfo = new trafficInfo();
+                {
                     // Found a start tag
                     if(eventType == XmlPullParser.START_TAG)
                     {
+                        if (xpp.getName().equalsIgnoreCase("channel"))
+                        {
+                            trafficInfos  = new ArrayList<trafficInfo>();
+                        }
+                        else
+
+                        if (xpp.getName().equalsIgnoreCase("item"))
+                        {
+                            Log.e("MyTag","Item Start Tag found");
+                            tinfo = new trafficInfo();
+
+                        }else
                         // Check which Tag we have
                         if (xpp.getName().equalsIgnoreCase("title"))
                         {
@@ -181,9 +197,14 @@ public class trafficInfoParser  extends AppCompatActivity
                                             PubDate=pubDate;
                                             tinfo.setPubDate(PubDate);
                                             Log.e("CheckingOutRSSParser", "traffic Info here: " + tinfo.toString());
-                                        }
+                                        }else
+                                            if(eventType == XmlPullParser.END_TAG){
+                                                if(xpp.getName().equalsIgnoreCase("item")){
+                                                    trafficInfos.add(tinfo);
+                                                }
+                                            }
 
-                        trafficInfos.add(tinfo);
+
                     }
 
                     // Get the next event
@@ -211,4 +232,5 @@ public class trafficInfoParser  extends AppCompatActivity
 
 
     }
+
 
